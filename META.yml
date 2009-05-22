@@ -1,0 +1,19 @@
+abstract: Download mp4 files from Veoh
+author: Yusuke Wada <yusuke at kamawada.com>
+build_requires: 
+  Test::More: 0
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: perl
+name: WWW-Veoh-Download
+no_index: 
+  directory: 
+    - inc
+    - t
+requires: 
+  Any::Moose: 0
+  Filter::Util::Call: 0
+  HTTP::Request: 0
+  LWP::UserAgent: 0
+tests: t/*.t
+version: 0.01
