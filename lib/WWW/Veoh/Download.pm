@@ -44,8 +44,12 @@ sub get_mp4_url {
             $self->api_key, $video_id;
     my $res = $self->ua->get($api_url);
     croak "can't get api content: " . $res->status_line if $res->is_error;
-    $res->content =~ /ipodUrl="([^\"]+)"/;
-    return $1 || croak "can't find mp4 url";
+
+    if( $res->content =~ /ipodUrl="([^\"]+)"/ ){
+        return $1;
+    }else{
+        croak "can't find mp4 url";
+    }
 }
 
 1;
