@@ -48,6 +48,9 @@ sub get_mp4_url {
     if( $res->content =~ /ipodUrl="([^\"]+)"/ ){
         return $1;
     }else{
+        if( $res->content =~ /aowPermalink="([^\"]+)"/ ){
+            croak "this video is not veoh content see: $1";
+        }
         croak "can't find mp4 url";
     }
 }
