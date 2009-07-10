@@ -45,7 +45,10 @@ sub get_mp4_url {
     my $res = $self->ua->get($api_url);
     croak "can't get api content: " . $res->status_line if $res->is_error;
 
-    if( $res->content =~ /ipodUrl="([^\"]+)"/ ){
+    if ( $res->content =~ /ipodUrl=""/ ) {
+        $self->ua->head("http://www.veoh.com/iphone/#_Home");
+        $res = $self->ua->get("http://www.veoh.com/iphone/views/watch.php?id=$video_id&__async=true&__source=waHome");
+        $res->content =~ /watchNow\('(.*?)'\)/;
         return $1;
     }else{
         if( $res->content =~ /aowPermalink="([^\"]+)"/ ){
