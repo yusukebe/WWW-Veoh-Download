@@ -23,10 +23,9 @@ sub download {
     my ( $self, $video_id, @args ) = @_;
 
     my $mp4_url = $self->get_mp4_url($video_id);
-
     $self->ua->timeout( $self->timeout_for_check );    #xxx
     my $res = $self->ua->get($mp4_url);
-    croak "can't download mp4 file: " . $res->staus_line
+    croak "can't download mp4 file: " . $res->status_line
         if $res->is_error;
     $self->ua->timeout();
     $res = $self->ua->request( HTTP::Request->new( GET => $mp4_url ) , @args );
@@ -48,7 +47,7 @@ sub get_mp4_url {
     if ( $res->content =~ /ipodUrl=""/ ) {
         $self->ua->head("http://www.veoh.com/iphone/#_Home");
         $res = $self->ua->get("http://www.veoh.com/iphone/views/watch.php?id=$video_id&__async=true&__source=waHome");
-        $res->content =~ /watchNow\('(.*?)'\)/;
+        $res->content =~ /watchNow\('(http:\/\/content\.veoh\.com.+?)'/;
         return $1;
     }else{
         if( $res->content =~ /aowPermalink="([^\"]+)"/ ){
